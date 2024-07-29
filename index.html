@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=M+PLUS+Rounded+1c&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400..800&family=Gabarito:wght@400..900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=M+PLUS+Rounded+1c:wght@300;400&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+        html, body {
+            margin: 0;
+            height: 100%;
+            font-family: 'Roboto' !important;
+            color: white;
+            font-size: 9px;
+        }
+
+        body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #444; /* Changed from #444 to #000 */
+  color: white;
+  font-size: 14px;
+  overflow-x: hidden;
+            
+}
+
+        #magic {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            display: block;
+            top: 0;
+            left: 0;
+            z-index: -9999;
+            background-color: #000000;
+        }
+
+        .playground {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            display: block;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .bottomPosition {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .minText {
+            font-size: 14px;
+        }
+
+        a {
+            color: white;
+            font-size: 12px;
+            text-decoration: none;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        .neon {
+            color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 40px #0ff,
+                0 0 80px #0ff,
+                0 0 90px #0ff,
+                0 0 100px #0ff,
+                0 0 150px #0ff;
+        }
+
+        .cards-section {
+            background: #000000;
+            
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #000000f9;
+            transition: filter 0.3s ease;
+            padding: 50px;
+            box-sizing: border-box;
+            margin-top: 100%;
+        }
+
+        .container .card {
+            position: relative;
+            margin-right: 5%;
+            box-shadow: 20px rgb(54, 55, 55);
+        }
+
+        .container .card .face {
+            width: 500px;
+            height: 300px;
+            transition: .3s;
+            
+            
+        }
+
+        .container .card .face.face1 {
+            position: relative;
+            background: #0c0c0c;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 50%;  /* Adjust this value to change the size of the SVG */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            transform: translateY(100px);
+            border-radius: 20px;
+            box-shadow: 0 0 80px rgba(255, 255, 255, 0.5);
+        }
+        .container .card:hover .face.face1 {
+            background: none;
+            background-image: none;
+        }
+
+/* Research card SVG */
+        .container .research-card .face.face1 {
+            background-image: url("data:image/svg+xml,%3Csvg fill='%23000000' viewBox='0 0 24 24' id='research-left' data-name='Flat Line' xmlns='http://www.w3.org/2000/svg' class='icon flat-line' opacity='0.2'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E%3Ccircle id='secondary' cx='16' cy='10' r='3' style='fill: %23000000; stroke-width: 2;' opacity='0.2'%3E%3C/circle%3E%3Cpath id='primary' d='M7,17V12m4,5V15M21,15l-2.83-2.83M13,10a3,3,0,1,0,3-3A3,3,0,0,0,13,10Z' style='fill: none; stroke: %23ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;' opacity='0.2'%3E%3C/path%3E%3Cpath id='primary-2' data-name='primary' d='M17,17v3a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V4A1,1,0,0,1,4,3H16' style='fill: none; stroke: %23ffffff; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2;' opacity='0.2'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .container .medidentify .face.face1 {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 60 60' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:sketch='http://www.bohemiancoding.com/sketch/ns' fill='%23000000' opacity='0.05'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E%3Ctitle%3EResearch%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cdefs%3E%3C/defs%3E%3Cg id='colored' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' sketch:type='MSPage'%3E%3Cg id='Science_sliced' sketch:type='MSLayerGroup' transform='translate(-840.000000, 0.000000)'%3E%3C/g%3E%3Cg id='Science' sketch:type='MSLayerGroup' transform='translate(-836.000000, 2.000000)' stroke-linecap='round' stroke='%23ffffff' stroke-width='2'%3E%3Cg id='Research' transform='translate(839.000000, 11.000000)' sketch:type='MSShapeGroup'%3E%3Cpath d='M0,15.4405232 L3.81517852,28.4861692 L11.8173177,0 L16.1739921,38 L23.3190323,9.13751411 L28.4183886,23.0257309 L33.7771687,4.94359453 L38.0152662,18.0978162 L44,18.0978162' id='Path-107' stroke-linejoin='round'%3E%3C/path%3E%3Ccircle id='Oval-102' fill='%23000000' cx='49' cy='18' r='5'%3E%3C/circle%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        
+        .container .colorquell .face.face1 {
+            background-image: url("data:image/svg+xml,%3Csvg width='100px' height='100px' viewBox='0 0 24 24' opacity='0.05' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E %3Cpath d='M14 2.75C15.9068 2.75 17.2615 2.75159 18.2892 2.88976C19.2952 3.02503 19.8749 3.27869 20.2981 3.7019C20.7852 4.18904 20.9973 4.56666 21.1147 5.23984C21.2471 5.9986 21.25 7.08092 21.25 9C21.25 9.41422 21.5858 9.75 22 9.75C22.4142 9.75 22.75 9.41422 22.75 9L22.75 8.90369C22.7501 7.1045 22.7501 5.88571 22.5924 4.98199C22.417 3.97665 22.0432 3.32568 21.3588 2.64124C20.6104 1.89288 19.6615 1.56076 18.489 1.40314C17.3498 1.24997 15.8942 1.24998 14.0564 1.25H14C13.5858 1.25 13.25 1.58579 13.25 2C13.25 2.41421 13.5858 2.75 14 2.75Z' fill='%23ffffff'%3E%3C/path%3E %3Cpath d='M2.00001 14.25C2.41422 14.25 2.75001 14.5858 2.75001 15C2.75001 16.9191 2.75289 18.0014 2.88529 18.7602C3.00275 19.4333 3.21477 19.811 3.70191 20.2981C4.12512 20.7213 4.70476 20.975 5.71085 21.1102C6.73852 21.2484 8.09318 21.25 10 21.25C10.4142 21.25 10.75 21.5858 10.75 22C10.75 22.4142 10.4142 22.75 10 22.75H9.94359C8.10583 22.75 6.6502 22.75 5.51098 22.5969C4.33856 22.4392 3.38961 22.1071 2.64125 21.3588C1.95681 20.6743 1.58304 20.0233 1.40762 19.018C1.24992 18.1143 1.24995 16.8955 1.25 15.0964L1.25001 15C1.25001 14.5858 1.58579 14.25 2.00001 14.25Z' fill='%23ffffff'%3E%3C/path%3E %3Cpath d='M22 14.25C22.4142 14.25 22.75 14.5858 22.75 15L22.75 15.0963C22.7501 16.8955 22.7501 18.1143 22.5924 19.018C22.417 20.0233 22.0432 20.6743 21.3588 21.3588C20.6104 22.1071 19.6615 22.4392 18.489 22.5969C17.3498 22.75 15.8942 22.75 14.0564 22.75H14C13.5858 22.75 13.25 22.4142 13.25 22C13.25 21.5858 13.5858 21.25 14 21.25C15.9068 21.25 17.2615 21.2484 18.2892 21.1102C19.2952 20.975 19.8749 20.7213 20.2981 20.2981C20.7852 19.811 20.9973 19.4333 21.1147 18.7602C21.2471 18.0014 21.25 16.9191 21.25 15C21.25 14.5858 21.5858 14.25 22 14.25Z' fill='%23ffffff'%3E%3C/path%3E %3Cpath d='M9.94359 1.25H10C10.4142 1.25 10.75 1.58579 10.75 2C10.75 2.41421 10.4142 2.75 10 2.75C8.09319 2.75 6.73852 2.75159 5.71085 2.88976C4.70476 3.02503 4.12512 3.27869 3.70191 3.7019C3.21477 4.18904 3.00275 4.56666 2.88529 5.23984C2.75289 5.9986 2.75001 7.08092 2.75001 9C2.75001 9.41422 2.41422 9.75 2.00001 9.75C1.58579 9.75 1.25001 9.41422 1.25001 9L1.25 8.90369C1.24995 7.10453 1.24992 5.8857 1.40762 4.98199C1.58304 3.97665 1.95681 3.32568 2.64125 2.64124C3.38961 1.89288 4.33856 1.56076 5.51098 1.40314C6.65019 1.24997 8.10584 1.24998 9.94359 1.25Z' fill='%23ffffff'%3E%3C/path%3E %3Cpath d='M12 10.75C11.3096 10.75 10.75 11.3096 10.75 12C10.75 12.6904 11.3096 13.25 12 13.25C12.6904 13.25 13.25 12.6904 13.25 12C13.25 11.3096 12.6904 10.75 12 10.75Z' fill='%23ffffff'%3E%3C/path%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M5.89243 14.0598C5.29748 13.3697 5.00001 13.0246 5.00001 12C5.00001 10.9754 5.29748 10.6303 5.89243 9.94021C7.08038 8.56223 9.07269 7 12 7C14.9273 7 16.9196 8.56222 18.1076 9.94021C18.7025 10.6303 19 10.9754 19 12C19 13.0246 18.7025 13.3697 18.1076 14.0598C16.9196 15.4378 14.9273 17 12 17C9.07269 17 7.08038 15.4378 5.89243 14.0598ZM9.25001 12C9.25001 10.4812 10.4812 9.25 12 9.25C13.5188 9.25 14.75 10.4812 14.75 12C14.75 13.5188 13.5188 14.75 12 14.75C10.4812 14.75 9.25001 13.5188 9.25001 12Z' fill='%23ffffff'%3E%3C/path%3E %3C/g%3E%3C/svg%3E")
+        }
+        .container .handswipe .face.face1{
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' opacity='0.05' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M18.906 3.92194C17.8921 2.88646 16.4461 2.50452 15.0306 2.9073C14.6322 3.02066 14.2173 2.78959 14.104 2.39119C13.9906 1.99279 14.2217 1.57792 14.6201 1.46456C16.5583 0.913072 18.5747 1.43959 19.9778 2.8725C20.2676 3.16846 20.2626 3.64331 19.9666 3.9331C19.6706 4.2229 19.1958 4.2179 18.906 3.92194ZM11.1904 3.30839C10.9763 2.94131 10.3525 2.7187 9.71882 3.08085C9.08746 3.44168 8.97642 4.07772 9.18675 4.4384L11.7124 8.76952C11.9211 9.12734 11.8001 9.58656 11.4423 9.79522C11.0845 10.0039 10.6253 9.88296 10.4166 9.52514L7.89098 5.19403C7.89085 5.19381 7.8911 5.19424 7.89098 5.19403L7.04909 3.75032C6.83503 3.38324 6.21122 3.16063 5.57755 3.52278C4.94619 3.88361 4.83515 4.51965 5.04548 4.88033L8.83397 11.377C9.04263 11.7348 8.92171 12.1941 8.56389 12.4027C8.20607 12.6114 7.74685 12.4905 7.53819 12.1326L5.85442 9.24522C5.64036 8.87814 5.01655 8.65553 4.38288 9.01768C3.75152 9.37851 3.64048 10.0145 3.85081 10.3752L7.6393 16.8719C9.24824 19.631 13.2186 20.5264 16.5856 18.6021C19.9502 16.6792 21.1463 12.8377 19.5411 10.085L17.0154 5.75387C16.8013 5.3868 16.1775 5.16418 15.5439 5.52633C14.9125 5.88716 14.8015 6.5232 15.0118 6.88389L16.6956 9.7713C16.7963 9.94411 16.8239 10.15 16.7721 10.3432C16.7203 10.5365 16.5935 10.701 16.4198 10.8003C14.8774 11.6818 14.4047 13.3863 15.0799 14.5443C15.2886 14.9022 15.1677 15.3614 14.8099 15.57C14.4521 15.7787 13.9928 15.6578 13.7842 15.3C12.7249 13.4835 13.3917 11.2368 15.0475 9.92287L11.1904 3.30839ZM13.9186 5.00916L12.4861 2.55277C11.7703 1.32517 10.163 1.09928 8.97453 1.77853C8.60823 1.98787 8.29668 2.27483 8.06179 2.60775C7.26173 1.72687 5.8839 1.62001 4.83326 2.22046C3.64241 2.90104 3.03012 4.40197 3.74971 5.63596L4.75188 7.35452C4.36684 7.39635 3.98493 7.51742 3.63859 7.71536C2.44774 8.39595 1.83545 9.89687 2.55504 11.1309L6.34352 17.6275C8.45427 21.2471 13.408 22.1458 17.3299 19.9044C21.254 17.6617 22.9513 12.9554 20.8368 9.32937L18.3112 4.99825C17.5953 3.77065 15.9881 3.54476 14.7996 4.22401C14.4495 4.42406 14.1495 4.69498 13.9186 5.00916ZM4.41401 17.859C4.77183 17.6504 5.23105 17.7713 5.43971 18.1291C6.26657 19.5471 7.53066 20.6193 9.08954 21.3151C9.46779 21.4839 9.63757 21.9274 9.46875 22.3057C9.29993 22.6839 8.85645 22.8537 8.4782 22.6849C6.66668 21.8764 5.14688 20.6046 4.14393 18.8847C3.93527 18.5269 4.05619 18.0677 4.41401 17.859Z' fill='%23ffffff'%3E%3C/path%3E %3C/g%3E%3C/svg%3E")
+        }
+        .container .todo .face.face1{
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' opacity='0.1' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E %3Cpath opacity='0.4' d='M12.3691 8.87988H17.6191' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E %3Cpath opacity='0.4' d='M6.38086 8.87988L7.13086 9.62988L9.38086 7.37988' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E %3Cpath opacity='0.4' d='M12.3691 15.8799H17.6191' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E %3Cpath opacity='0.4' d='M6.38086 15.8799L7.13086 16.6299L9.38086 14.3799' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E %3Cpath d='M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3C/path%3E %3C/g%3E%3C/svg%3E")
+        }
+        .container .arcade .face.face1{
+            background-image: url("data:image/svg+xml,%3Csvg height='200px' width='200px' version='1.1' opacity='0.1' id='_x32_' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 512 512' xml:space='preserve' fill='%23ffffff'%3E%3Cg id='SVGRepo_bgCarrier' stroke-width='0'%3E%3C/g%3E%3Cg id='SVGRepo_tracerCarrier' stroke-linecap='round' stroke-linejoin='round'%3E%3C/g%3E%3Cg id='SVGRepo_iconCarrier'%3E %3Cstyle type='text/css'%3E .st0%7Bfill:%23ffffff;%7D %3C/style%3E %3Cg%3E %3Cpath class='st0' d='M510.002,309.835l-0.068-0.326l-0.076-0.334l-26.508-112.721l-0.106-0.417l-0.106-0.418 c-16.668-62.217-73.294-105.666-137.712-105.666H166.579c-64.418,0-121.045,43.449-137.712,105.666l-0.114,0.418l-0.099,0.417 L2.147,309.174l-0.076,0.326l-0.068,0.326c-9.749,46.43,16.926,92.496,62.036,107.168l1.586,0.509 c9.24,3.012,18.89,4.544,28.624,4.544c32.668,0,63.128-17.404,79.758-45.489l22.556-33.343l0.561-0.835l0.509-0.872 c0.796-1.388,2.276-2.253,3.861-2.253h109.02c1.586,0,3.066,0.865,3.862,2.253l0.508,0.872l0.562,0.835l22.555,33.343 c16.63,28.085,47.09,45.489,79.766,45.489c9.734,0,19.384-1.532,28.67-4.56l1.533-0.493 C493.07,402.331,519.737,356.257,510.002,309.835z M439.318,390.397l-1.54,0.501c-6.608,2.154-13.353,3.186-20.014,3.186 c-22.646,0-44.283-11.949-56.088-32.433l-23.064-34.101c-5.788-10.053-16.508-16.258-28.101-16.258h-109.02 c-11.592,0-22.312,6.206-28.101,16.258l-23.063,34.101c-11.804,20.484-33.434,32.433-56.081,32.433 c-6.661,0-13.405-1.032-20.013-3.186l-1.548-0.501c-31.431-10.219-50.102-42.485-43.311-74.819l26.508-112.722 c13.42-50.102,58.826-84.94,110.696-84.94h178.847c51.869,0,97.276,34.838,110.696,84.94l26.508,112.722 C489.413,347.912,470.75,380.178,439.318,390.397z'%3E%3C/path%3E %3Cpolygon class='st0' points='157.453,172.061 123.912,172.061 123.912,210.579 85.387,210.579 85.387,244.105 123.912,244.105 123.912,282.637 157.453,282.637 157.453,244.105 195.978,244.105 195.978,210.579 157.453,210.579 '%3E%3C/polygon%3E %3Cpath class='st0' d='M365.721,206.247c11.668,0,21.113-9.445,21.113-21.098c0-11.669-9.445-21.114-21.113-21.114 c-11.653,0-21.098,9.445-21.098,21.114C344.622,196.802,354.068,206.247,365.721,206.247z'%3E%3C/path%3E %3Cpath class='st0' d='M323.509,206.247c-11.653,0-21.106,9.453-21.106,21.098c0,11.669,9.453,21.122,21.106,21.122 c11.661,0,21.106-9.453,21.106-21.122C344.615,215.7,335.17,206.247,323.509,206.247z'%3E%3C/path%3E %3Cpath class='st0' d='M365.721,248.459c-11.653,0-21.098,9.445-21.098,21.114c0,11.653,9.445,21.098,21.098,21.098 c11.668,0,21.113-9.445,21.113-21.098C386.834,257.904,377.388,248.459,365.721,248.459z'%3E%3C/path%3E %3Cpath class='st0' d='M407.933,206.247c-11.653,0-21.099,9.453-21.099,21.098c0,11.669,9.446,21.122,21.099,21.122 c11.66,0,21.113-9.453,21.113-21.122C429.046,215.7,419.593,206.247,407.933,206.247z'%3E%3C/path%3E %3C/g%3E %3C/g%3E%3C/svg%3E")
+        }
+
+        .container .card .face.face1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background: rgba(0, 0, 0, 0.95);   */
+            border-radius: 20px;
+            z-index: -1;
+        }
+        .container .card:hover .face.face1  {
+            transform: translateY(0);
+            background: rgba(0, 0, 0, 1);
+            box-shadow:
+                inset 0 0 60px whitesmoke,
+                inset 20px 0 80px #f0f,
+                inset -20px 0 80px #0ff,
+                inset 20px 0 300px #f0f,
+                inset -20px 0 300px #0ff,
+                0 0 50px #fff,
+                -10px 0 80px #f0f,
+                10px 0 80px #0ff;
+        }
+
+        .container .card .face.face1 .content {
+            opacity: 1;
+            transition: 0.5s;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .container .card:hover .face.face1 .content {
+            opacity: 2;
+            
+        }
+
+        .container .card .face.face1 .content i {
+            font-size: 3em;
+            color: white;
+            display: inline-block;
+        }
+
+        .container .card .face.face1 .content h3 {
+            font-size: 1em;
+            color: white;
+            text-align: center;
+        }
+
+        .container .card .face.face1 .content a {
+            transition: .5s;
+        }
+
+        .container .card .face.face2 {
+            position: relative;
+            background: whitesmoke;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.345);
+            transform: translateY(-200px);
+            border-radius: 22px;
+        
+        }
+
+        .container .card:hover .face.face2 {
+            transform: translateY(0);
+        }
+
+        .container .card .face.face2 .content p, a {
+            font-size: 10pt;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container .card .face.face2 .content a {
+            text-decoration: none;
+            color: black;
+            box-sizing: border-box;
+            outline: 1px dashed #333;
+            padding: 10px;
+            margin: 15px 0 0;
+            display: inline-block;
+        }
+
+
+
+/*==============================================OpenText CSS================================================  */
+/*==============================================OpenText CSS================================================  */
+/*==============================================OpenText CSS================================================  */
+/*==============================================OpenText CSS================================================  */
+/*==============================================OpenText CSS================================================  */
+.ot_card-container {
+  width: 900px;
+  height: 600px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(15, 15, 15);
+  overflow: hidden;
+  margin-bottom: 10%;
+}
+
+.ot_card {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.ot_card .ot_front-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #010824f5; /* Added background gradient */
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ot_card .ot_front-content p {
+  font-size: 100px;
+  font-weight: 1000;
+  opacity: 1;
+  background: linear-gradient(-45deg,  #363946fa 0%, #193cd8 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  
+}
+
+.ot_card .ot_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  background: #131313;
+  color: #e8e8e8;
+  padding-right: 40px;
+  line-height: 1.5;
+  border-radius: 5px;
+  pointer-events: none;
+  transform: translateX(-96%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.ot_card .ot_content .ot_heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px; 
+}
+
+.ot_card:hover .ot_content {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.ot_card:hover .ot_front-content {
+  transform: translateX(-30%);
+}
+
+.ot_card:hover .ot_front-content p {
+  opacity: 0;
+  
+  
+}
+
+
+/* ==========================================MAvenMagnet AI CSS==================================================== */
+/* ==========================================MAvenMagnet AI CSS==================================================== */
+/* ==========================================MAvenMagnet AI CSS==================================================== */
+/* ==========================================MAvenMagnet AI CSS==================================================== */
+/* ==========================================MAvenMagnet AI CSS==================================================== */
+.mm_card-container {
+  width: 900px;
+  height: 600px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(15, 15, 15);
+  overflow: hidden;
+  margin-bottom: 10%;
+}
+
+.mm_card {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.mm_card .mm_front-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #170600f5; /* Added background gradient */
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.mm_card .mm_front-content p {
+  font-size: 100px;
+  font-weight: 1000;
+  opacity: 1;
+  background: linear-gradient(-45deg, #ebca96 0%,  #efa42cfa 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  font-family: "Quicksand";
+}
+
+.mm_card .mm_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  background: #131313;
+  color: #e8e8e8;
+  padding-right: 40px;
+  line-height: 1.5;
+  border-radius: 5px;
+  pointer-events: none;
+  transform: translateX(-96%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.mm_card .mm_content .mm_heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px; 
+}
+
+.mm_card:hover .mm_content {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.mm_card:hover .mm_front-content {
+  transform: translateX(-30%);
+}
+
+.mm_card:hover .mm_front-content p {
+  opacity: 0;
+  
+  
+}
+
+/* ================================================Certify2Win CSS =================================================*/
+/* ================================================Certify2Win CSS =================================================*/
+/* ================================================Certify2Win CSS =================================================*/
+/* ================================================Certify2Win CSS =================================================*/
+/* ================================================Certify2Win CSS =================================================*/
+
+.cw_card-container {
+  width: 900px;
+  height: 600px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgb(15, 15, 15);
+  overflow: hidden;
+  margin-bottom: 10%;
+}
+
+.cw_card {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.cw_card .cw_front-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a1422f5; /* Added background gradient */
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.cw_card .cw_front-content p {
+  font-size: 100px;
+  font-weight: 1000;
+  opacity: 1;
+  background: linear-gradient(-45deg,  #d669bb 0%, #ffffff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+  font-family: "Libre Baskerville", serif;
+}
+
+.cw_card .cw_content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  background: #131313;
+  color: #e8e8e8;
+  padding-right: 40px;
+  line-height: 1.5;
+  border-radius: 5px;
+  pointer-events: none;
+  transform: translateX(-96%);
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.cw_card .cw_content .cw_heading {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 10px; 
+}
+
+.cw_card:hover .cw_content {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.cw_card:hover .cw_front-content {
+  transform: translateX(-30%);
+}
+
+.cw_card:hover .cw_front-content p {
+  opacity: 0;
+  
+  
+}
+
+/* =======================================Neon Button========================================= */
+/* =======================================Neon Button========================================= */
+/* =======================================Neon Button========================================= */
+/* =======================================Neon Button========================================= */
+/* =======================================Neon Button========================================= */
+.neonbutton {
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgb(61, 106, 255);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.neonbutton:hover {
+  background: rgb(61, 106, 255);
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.neonbutton:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+.neonbutton::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.neonbutton:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+/* ========================Section CSS=========================== */
+.section{
+    color: #fff;
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #000000,
+                0 0 40px rgb(0, 0, 0),
+                0 0 80px rgb(0, 0, 0),
+                0 0 90px rgb(29, 5, 73),
+                0 0 100px rgb(29, 5, 73),
+                0 0 150px rgb(29, 5, 73);
+    font-family: "Gabarito", sans-serif;
+    font-weight: 900;
+    font-size: 80px;
+
+}
+    </style>
+</head>
+<body>
+    <div id="magic"></div>
+    <div class="playground">
+    </div>
+    <div class="container">
+        <h1 class="section" style="padding-right: 40%; padding-left: 40%;">Projects</h1>
+        <div class="card research-card">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">Research Paper</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px;color:white; background: #6705c3; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>ML</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>AI</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Tensorflow</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                      </div>
+                    <p>
+                        Comparative Analysis of Traditional and Modern Machine Learning Models for Intrusion Detection:
+                        A Case Study on the ISCX-IDS-2012 Dataset
+                    </p>
+                    <a href="https://nil58.wordpress.com/2024/07/07/hey-there/" type="button">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="card medidentify">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">MedIdentify</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px;color:white; background: #6705c3; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>ML</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>AI</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Tensorflow</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #94054f; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>OpenCV</strong>
+                        </button>
+                      </div>
+                    <p>
+                        MedIdentify is revolutionizing handwritten text recognition with a cutting-edge pipeline powered by a pre-trained TensorFlow model. 
+                        Trained on the respected IAM dataset, this model excels in recognizing diverse writing styles with unwavering accuracy.
+                    </p>
+                    <a href="https://nil58.wordpress.com/2024/06/08/medidentify/" type="button">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="card colorquell">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">Color Quell</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px;color:white; background: #6705c3; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>ML</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>AI</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Tensorflow</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #000000; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>Pandas</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #94054f; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>OpenCV</strong>
+                        </button>
+                      </div>
+                    <p> 
+                        About 1 in 12 men and 1 in 200 women have some form of color blindness.
+                        Color quell is a tool that can simulate the visual experience of color blindness for people with normal color vision. 
+                        This tool can be used by designers, developers, and others who work with visual content to better understand how their work 
+                        may appear to people with different types of color vision
+                        deficiencies.
+                    </p>
+                    <a href="https://nil58.wordpress.com/2024/06/08/colorquell/" type="button">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="card handswipe">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">Hand-Swipe</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px;color:white; background: #6705c3; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>ML</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>AI</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Tensorflow</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #94054f; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>OpenCV</strong>
+                        </button>
+                      </div>
+                    <p>
+                        The conventional techniques for managing a PowerPoint presentation might be constrained and call for the 
+                        usage of tangible objects like a keyboard or mouse.
+                        Additionally, it can be difficult and time-consuming to draw or annotate while
+                        giving a presentation. 
+                        The goal of this project is to get over these restrictions by creating a system that makes it possible to 
+                        control a PowerPoint presentation with hand gestures.
+                    </p>
+                    <a href="https://nil58.wordpress.com/2024/06/08/hand-swipe/" type="button">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="card todo">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">Todo API</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px;color:white; background: #d00202; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Web Development</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #8d6309; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>FastAPI</strong>
+                        </button>
+    
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #048266; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>NoSQL</strong>
+                        </button>
+                        
+                      </div>
+                    <p>
+                        This project showcases a high-performance Todo API built with FastAPI. 
+                        Leveraging FastAPI's speed, automatic documentation, 
+                        and seamless integration with frontend applications, 
+                        the API efficiently supports CRUD operations with token-based authentication for secure access. 
+                        Check out the full implementation on GitHub.
+                    </p>
+                    <a href="https://nil58.wordpress.com/?p=103" type="button">Read More</a>
+                </div>
+            </div>
+        </div>
+        <div class="card arcade">
+            <div class="face face1">
+                <div class="content">
+                    <i class="fab fa-windows"></i>
+                    <h1 class="neon">Arcade</h1>
+                </div>
+            </div>
+            <div class="face face2">
+                <div class="content">
+                    <div style="display: flex; gap: 10px; padding-bottom: 5%;">
+                        
+    
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                          <strong>Python</strong>
+                        </button>
+                        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #04821f; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                            <strong>Turtle</strong>
+                        </button>
+                        
+                      </div>
+                    <p>
+                        Discover how I've created classic arcade games like Turtle Crossing, 
+                        Ping Pong, and Snake using Python's Turtle library. These projects showcase the library's potential
+                        for learning programming concepts, including object-oriented programming (OOP), 
+                         hrough fun and interactive game development.
+                    </p>
+                    <a href="https://nil58.wordpress.com/2024/07/26/arcade/" type="button">Read More</a>
+                </div>
+
+                
+            </div>
+        </div>
+
+<!--================================================== OpenText Experience card=============================================== -->
+<!--================================================== OpenText Experience card=============================================== -->
+<!--================================================== OpenText Experience card=============================================== -->
+<!--================================================== OpenText Experience card=============================================== -->
+<!--================================================== OpenText Experience card=============================================== -->
+<h1 class="section" style="padding-right: 40%; padding-left: 40%; padding-bottom: 10%;">My Experiences</h1>        
+<div class="ot_card-container">
+            <div class="ot_card">
+            <div class="ot_front-content">
+              <p>OpenText</p>
+            </div>
+            <div class="ot_content">
+              <p class="ot_heading">Research and Development Internship</p>
+              <div style="display: flex; gap: 10px;">
+                <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px; background: #d5f365; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                  <strong>Confluence</strong>
+                </button>
+                <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                  <strong>Jira</strong>
+                </button>
+                <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                  <strong>Arbotext</strong>
+                </button>
+                <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+                  <strong>XML/HTML</strong>
+                </button>
+              </div>
+              <p style="font-size: large;">
+                My internship at OpenText was more than just a professional experience;<br/>
+                it was a journey of discovery and development. <br/>
+                It taught me the importance of detailed documentation, effective collaboration, and strategic project management. <br/>
+                As I move forward in my career, I carry with me the lessons learned,<br/>
+                and the confidence gained from this transformative experience.
+                
+              </p>
+              
+                <a class = "neonbutton" type="button" href="https://nil58.wordpress.com/2024/07/29/rd-internship-at-opentext/">
+                    Read the full blog!
+                </a>
+                    
+            </div>
+            
+          </div>
+          </div>
+<!-- =================================================MavenMagnet AI experience card=========================================== -->
+<!-- =================================================MavenMagnet AI experience card=========================================== -->
+<!-- =================================================MavenMagnet AI experience card=========================================== -->
+<!-- =================================================MavenMagnet AI experience card=========================================== -->
+<!-- =================================================MavenMagnet AI experience card=========================================== -->
+<div class="mm_card-container">
+    <div class="mm_card">
+    <div class="mm_front-content">
+      <p>mavenmagnet</p>
+    </div>
+    <div class="mm_content">
+      <p class="mm_heading">Data Science Internship</p>
+      <div style="display: flex; gap: 10px;">
+        <button id="bottone1" style="padding: 5px 10px ; border-radius: 9px; background: #d5f365; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>Beautiful Soup</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #4351ca; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>Python</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26bc0b;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>Selenium</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #ff8a04; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>SQL</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #3d0985; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+            <strong>Machine Learning</strong>
+          </button>
+          <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:rgb(254, 254, 254); background: #afaa09; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+            <strong>Artificial Intelligence</strong>
+          </button>
+      </div>
+      <p style="font-size: large;">
+        My internship at MavenMagnet was a transformative experience that solidified my interest <br/>
+        in the intersection of software development and data science. <br/>
+        By developing a dashboard that improved data retrieval speed and expanded the data search pool, <br/>
+        I saw firsthand the impact of software engineering on data analysis and decision-making processes.<br/>
+        
+      </p>
+      <a class = "neonbutton" type="button" href="https://nil58.wordpress.com/2024/07/29/data-science-internship-at-mavenmagnet/">
+        Read the full blog!
+    </a>
+    </div>
+  </div>
+  </div>
+
+<!-- ====================================================Certify2Win experience card========================================= -->
+<!-- ====================================================Certify2Win experience card========================================= -->
+<!-- ====================================================Certify2Win experience card========================================= -->
+<!-- ====================================================Certify2Win experience card========================================= -->
+<!-- ====================================================Certify2Win experience card========================================= -->
+<div class="cw_card-container">
+    <div class="cw_card">
+    <div class="cw_front-content">
+      <p>Certify2Win</p>
+      
+    </div>
+    <div class="cw_content">
+      <p class="cw_heading">Architect and Developer</p>
+      <div style="display: flex; gap: 10px;">
+        
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #000000; color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>Next JS</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; background: #26d507;color:white; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>Node JS</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #2a04ff; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+          <strong>React JS</strong>
+        </button>
+        <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:white; background: #3d0985; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+            <strong>Web Development</strong>
+          </button>
+          <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:rgb(254, 254, 254); background: #b35304; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+            <strong>Dynamo DB</strong>
+          </button>
+          <button id="bottone1" style="padding: 5px 10px; border-radius: 9px; color:rgb(254, 254, 254); background: #b3a203; border: none; font-family: inherit; text-align: center; cursor: pointer; transition: 0.4s; box-shadow: 7px 5px 56px -14px #C3D900;">
+            <strong>AWS</strong>
+          </button>
+      </div>
+      <p style="font-size: large;">
+        My internship at Certify2Win was a transformative experience. <br/>
+        It reinforced my passion for software development, data analysis, and technical writing. <br/>
+        Leading a team in building a secure, scalable, and user-friendly platform was both challenging and fulfilling. <br/>
+        This journey has fueled my ambition to continue exploring and innovating within the field of software engineering, <br/>
+        always striving for solutions that are both efficient and effective. <br/>
+      </p>
+        <a class = "neonbutton" type="button" href="https://nil58.wordpress.com/2024/07/29/architect-and-developer-role-at-certify2win/">
+            Read the full blog!
+        </a>
+    </div>
+  </div>
+  </div>
+
+<!-- Add more cards as needed -->
+    </div>
+    
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+        attribute float size;
+        attribute vec3 customColor;
+        varying vec3 vColor;
+
+        void main() {
+            vColor = customColor;
+            vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+            gl_PointSize = size * (300.0 / -mvPosition.z);
+            gl_Position = projectionMatrix * mvPosition;
+        }
+    </script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+        uniform vec3 color;
+        uniform sampler2D pointTexture;
+        varying vec3 vColor;
+
+        void main() {
+            gl_FragColor = vec4(color * vColor, 1.0);
+            gl_FragColor = gl_FragColor * texture2D(pointTexture, gl_PointCoord);
+        }
+    </script>
+
+    <script>const preload = () => {
+
+        let manager = new THREE.LoadingManager();
+        manager.onLoad = function() { 
+          const environment = new Environment( typo, particle );
+        }
+      
+        var typo = null;
+        const loader = new THREE.FontLoader( manager );
+        const font = loader.load('https://res.cloudinary.com/dydre7amr/raw/upload/v1612950355/font_zsd4dr.json', function ( font ) { typo = font; });
+        const particle = new THREE.TextureLoader( manager ).load( 'https://res.cloudinary.com/dfvtkoboz/image/upload/v1605013866/particle_a64uzf.png');
+      
+      }
+      
+      if ( document.readyState === "complete" || (document.readyState !== "loading" && !document.documentElement.doScroll))
+        preload ();
+      else
+        document.addEventListener("DOMContentLoaded", preload ); 
+      
+      class Environment {
+      
+        constructor( font, particle ){ 
+      
+          this.font = font;
+          this.particle = particle;
+          this.container = document.querySelector( '#magic' );
+          this.scene = new THREE.Scene();
+          this.createCamera();
+          this.createRenderer();
+          this.setup()
+          this.bindEvents();
+        }
+      
+        bindEvents(){
+      
+          window.addEventListener( 'resize', this.onWindowResize.bind( this ));
+          
+        }
+      
+        setup(){ 
+      
+          this.createParticles = new CreateParticles( this.scene, this.font,             this.particle, this.camera, this.renderer );
+        }
+      
+        render() {
+          
+           this.createParticles.render()
+           this.renderer.render( this.scene, this.camera )
+        }
+      
+        createCamera() {
+      
+          this.camera = new THREE.PerspectiveCamera( 65, this.container.clientWidth /  this.container.clientHeight, 1, 10000 );
+          this.camera.position.set( 0,0, 100 );
+      
+        }
+      
+        createRenderer() {
+      
+          this.renderer = new THREE.WebGLRenderer();
+          this.renderer.setSize( this.container.clientWidth, this.container.clientHeight );
+      
+          this.renderer.setPixelRatio( Math.min( window.devicePixelRatio, 2));
+      
+          this.renderer.outputEncoding = THREE.sRGBEncoding;
+          this.container.appendChild( this.renderer.domElement );
+      
+          this.renderer.setAnimationLoop(() => { this.render() })
+      
+        }
+      
+        onWindowResize(){
+      
+          this.camera.aspect = this.container.clientWidth / this.container.clientHeight;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize( this.container.clientWidth, this.container.clientHeight );
+      
+        }
+      }
+      
+      class CreateParticles {
+          
+          constructor( scene, font, particleImg, camera, renderer ) {
+          
+              this.scene = scene;
+              this.font = font;
+              this.particleImg = particleImg;
+              this.camera = camera;
+              this.renderer = renderer;
+              
+                    this.originalPositions = null; // Store original positions
+                this.exploded = false; // Track if particles have exploded
+                this.returning = false;
+                    
+
+              this.raycaster = new THREE.Raycaster();
+              this.mouse = new THREE.Vector2(-200, 200);
+              
+              this.colorChange = new THREE.Color();
+      
+              this.buttom = false;
+      
+              this.data = {
+      
+                //   text: '',
+                  amount: 1000,
+                  particleSize: 1.5,
+                  particleColor: '0x5D0E41',
+                  textSize: 16,
+                  area: 250,
+                  ease: .05,
+              }
+      
+              this.setup();
+              this.bindEvents();
+      
+          }
+          storeOriginalPositions() {
+                if (!this.originalPositions) {
+                    const pos = this.particles.geometry.attributes.position;
+                    this.originalPositions = new Float32Array(pos.array.length);
+                    this.originalPositions.set(pos.array);
+                }
+            }
+      
+          setup(){
+      
+              const geometry = new THREE.PlaneGeometry( this.visibleWidthAtZDepth( 100, this.camera ), this.visibleHeightAtZDepth( 100, this.camera ));
+              const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, transparent: true } );
+              this.planeArea = new THREE.Mesh( geometry, material );
+              this.planeArea.visible = false;
+              this.createText();
+      
+          }
+      
+          bindEvents() {
+      
+              document.addEventListener( 'mousedown', this.onMouseDown.bind( this ));
+              document.addEventListener( 'mousemove', this.onMouseMove.bind( this ));
+              document.addEventListener( 'mouseup', this.onMouseUp.bind( this ));
+              document.addEventListener('wheel', this.onScroll.bind(this));
+          }
+
+          onScroll(event) {
+        if (!this.exploded) {
+            this.storeOriginalPositions(); // Store original positions before exploding
+            this.exploded = true;
+        }
+
+        // Existing scatter logic
+        const pos = this.particles.geometry.attributes.position;
+        const particleCount = pos.count;
+        const explosionStrength = 40;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particlePos = new THREE.Vector3(
+                pos.getX(i),
+                pos.getY(i),
+                pos.getZ(i)
+            );
+
+            const direction = new THREE.Vector3(
+                (Math.random() - 0.5) * 2,
+                (Math.random() - 0.5) * 2,
+                (Math.random() - 0.5) * 2
+            ).normalize();
+
+            const distance = Math.random() * explosionStrength;
+            particlePos.add(direction.multiplyScalar(distance));
+            pos.setXYZ(i, particlePos.x, particlePos.y, particlePos.z);
+        }
+
+        pos.needsUpdate = true;
+
+        if (!this.returning) {
+            this.returning = true;
+            this.animateReturn();
+        }
+    }
+    animateReturn() {
+        const pos = this.particles.geometry.attributes.position;
+        const particleCount = pos.count;
+        const returnSpeed = 0.00001;
+
+        const animate = () => {
+            let hasMore = false;
+
+            for (let i = 0; i < particleCount; i++) {
+                const currentPos = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
+                const originalPos = new THREE.Vector3(
+                    this.originalPositions[i * 3],
+                    this.originalPositions[i * 3 + 1],
+                    this.originalPositions[i * 3 + 2]
+                );
+
+                const direction = originalPos.sub(currentPos).normalize();
+                const distance = originalPos.distanceTo(currentPos);
+
+                if (distance > 0.01) {
+                    currentPos.add(direction.multiplyScalar(Math.min(distance, returnSpeed)));
+                    pos.setXYZ(i, currentPos.x, currentPos.y, currentPos.z);
+                    hasMore = true;
+                } else {
+                    pos.setXYZ(i, originalPos.x, originalPos.y, originalPos.z);
+                }
+            }
+
+            pos.needsUpdate = true;
+
+            if (hasMore) {
+                requestAnimationFrame(animate);
+            } else {
+                this.returning = false;
+                this.exploded = false;
+                this.originalPositions = null;
+            }
+        };
+
+        animate();
+    }
+          onMouseDown(){
+              
+              this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+              this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+      
+              const vector = new THREE.Vector3( this.mouse.x, this.mouse.y, 0.5);
+              vector.unproject( this.camera );
+              const dir = vector.sub( this.camera.position ).normalize();
+              const distance = - this.camera.position.z / dir.z;
+              this.currenPosition = this.camera.position.clone().add( dir.multiplyScalar( distance ) );
+              
+              const pos = this.particles.geometry.attributes.position;
+              this.buttom = true;
+              this.data.ease = .01;
+              
+          }
+      
+          onMouseUp(){
+      
+              this.buttom = false;
+              this.data.ease = .05;
+          }
+      
+          onMouseMove( ) { 
+      
+              this.mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+              this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+      
+          }
+      
+          render( level ){ 
+      
+              const time = ((.001 * performance.now())%12)/12;
+              const zigzagTime = (1 + (Math.sin( time * 2 * Math.PI )))/6;
+      
+              this.raycaster.setFromCamera( this.mouse, this.camera );
+      
+              const intersects = this.raycaster.intersectObject( this.planeArea );
+      
+              if ( intersects.length > 0 ) {
+      
+                  const pos = this.particles.geometry.attributes.position;
+                  const copy = this.geometryCopy.attributes.position;
+                  const coulors = this.particles.geometry.attributes.customColor;
+                  const size = this.particles.geometry.attributes.size;
+      
+                  const mx = intersects[ 0 ].point.x;
+                  const my = intersects[ 0 ].point.y;
+                  const mz = intersects[ 0 ].point.z;
+      
+                  for ( var i = 0, l = pos.count; i < l; i++) {
+      
+                      const initX = copy.getX(i);
+                      const initY = copy.getY(i);
+                      const initZ = copy.getZ(i);
+      
+                      let px = pos.getX(i);
+                      let py = pos.getY(i);
+                      let pz = pos.getZ(i);
+      
+                      this.colorChange.setHSL( .5, 1 , 1 )
+                      coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
+                      coulors.needsUpdate = true;
+      
+                      size.array[ i ]  = this.data.particleSize;
+                      size.needsUpdate = true;
+      
+                      let dx = mx - px;
+                      let dy = my - py;
+                      const dz = mz - pz;
+      
+                      const mouseDistance = this.distance( mx, my, px, py )
+                      let d = ( dx = mx - px ) * dx + ( dy = my - py ) * dy;
+                      const f = - this.data.area/d;
+      
+                      if( this.buttom ){ 
+      
+                          const t = Math.atan2( dy, dx );
+                          px -= f * Math.cos( t );
+                          py -= f * Math.sin( t );
+      
+                          this.colorChange.setHSL( .5 + zigzagTime, 1.0 , .5 )
+                          coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
+                          coulors.needsUpdate = true;
+      
+                          if ((px > (initX + 70)) || ( px < (initX - 70)) || (py > (initY + 70) || ( py < (initY - 70)))){
+      
+                              this.colorChange.setHSL( .15, 1.0 , .5 )
+                              coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
+                              coulors.needsUpdate = true;
+      
+                          }
+      
+                      }else{
+                      
+                          if( mouseDistance < this.data.area ){
+      
+                              if(i%5==0){
+      
+                                  const t = Math.atan2( dy, dx );
+                                  px -= .03 * Math.cos( t );
+                                  py -= .03 * Math.sin( t );
+      
+                                  this.colorChange.setHSL( .15 , 1.0 , .5 )
+                                  coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
+                                  coulors.needsUpdate = true;
+      
+                                  size.array[ i ]  =  this.data.particleSize /1.2;
+                                  size.needsUpdate = true;
+      
+                              }else{
+      
+                                  const t = Math.atan2( dy, dx );
+                                  px += f * Math.cos( t );
+                                  py += f * Math.sin( t );
+      
+                                  pos.setXYZ( i, px, py, pz );
+                                  pos.needsUpdate = true;
+      
+                                  size.array[ i ]  = this.data.particleSize * 1.3 ;
+                                  size.needsUpdate = true;
+                              }
+      
+                              if ((px > (initX + 10)) || ( px < (initX - 10)) || (py > (initY + 10) || ( py < (initY - 10)))){
+      
+                                  this.colorChange.setHSL( .15, 1.0 , .5 )
+                                  coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
+                                  coulors.needsUpdate = true;
+      
+                                  size.array[ i ]  = this.data.particleSize /1.8;
+                                  size.needsUpdate = true;
+      
+                              }
+                          }
+      
+                      }
+      
+                      px += ( initX  - px ) * this.data.ease;
+                      py += ( initY  - py ) * this.data.ease;
+                      pz += ( initZ  - pz ) * this.data.ease;
+      
+                      pos.setXYZ( i, px, py, pz );
+                      pos.needsUpdate = true;
+      
+                  }
+              }
+          }
+      
+    createText() {
+    let thePoints = [];
+    let shapes = this.font.generateShapes('NILABJA SANYAL', this.data.textSize);
+    let shapes2 = this.font.generateShapes('<Engineer/Developer>', this.data.textSize / 2); // Smaller size for Engineer/Developer
+
+    let geometry = new THREE.ShapeGeometry(shapes);
+    let geometry2 = new THREE.ShapeGeometry(shapes2);
+
+    geometry.computeBoundingBox();
+    geometry2.computeBoundingBox();
+
+    const xMid = -0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+    const yMid = (geometry.boundingBox.max.y - geometry.boundingBox.min.y) / 2.85;
+
+    geometry.center();
+    geometry2.center();
+
+    let holeShapes = [];
+    let holeShapes2 = [];
+
+    for (let q = 0; q < shapes.length; q++) {
+        let shape = shapes[q];
+        if (shape.holes && shape.holes.length > 0) {
+            for (let j = 0; j < shape.holes.length; j++) {
+                let hole = shape.holes[j];
+                holeShapes.push(hole);
+            }
+        }
+    }
+
+    for (let q = 0; q < shapes2.length; q++) {
+        let shape = shapes2[q];
+        if (shape.holes && shape.holes.length > 0) {
+            for (let j = 0; j < shape.holes.length; j++) {
+                let hole = shape.holes[j];
+                holeShapes2.push(hole);
+            }
+        }
+    }
+
+    shapes.push.apply(shapes, holeShapes);
+    shapes2.push.apply(shapes2, holeShapes2);
+
+    let colors = [];
+    let sizes = [];
+    let colors2 = [];
+    let sizes2 = [];
+
+    for (let x = 0; x < shapes.length; x++) {
+        let shape = shapes[x];
+        const amountPoints = (shape.type == 'Path') ? this.data.amount / 2 : this.data.amount;
+        let points = shape.getSpacedPoints(amountPoints);
+
+        points.forEach((element, z) => {
+            const a = new THREE.Vector3(element.x, element.y, 0);
+            thePoints.push(a);
+            colors.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
+            sizes.push(1);
+        });
+    }
+
+    for (let x = 0; x < shapes2.length; x++) {
+        let shape = shapes2[x];
+        const amountPoints = (shape.type == 'Path') ? this.data.amount / 2 : this.data.amount;
+        let points = shape.getSpacedPoints(amountPoints);
+
+        points.forEach((element, z) => {
+            const a = new THREE.Vector3(element.x, element.y - 20, 0); // Adjust the y-position to move it below Nilabja Sanyal
+            thePoints.push(a);
+            colors2.push(this.colorChange.r, this.colorChange.g, this.colorChange.b);
+            sizes2.push(1);
+        });
+    }
+
+    let geoParticles = new THREE.BufferGeometry().setFromPoints(thePoints);
+    geoParticles.translate(xMid, yMid, 0);
+
+    geoParticles.setAttribute('customColor', new THREE.Float32BufferAttribute(colors.concat(colors2), 3));
+    geoParticles.setAttribute('size', new THREE.Float32BufferAttribute(sizes.concat(sizes2), 1));
+
+    const material = new THREE.ShaderMaterial({
+        uniforms: {
+            color: { value: new THREE.Color(0x5D0E41) },
+            pointTexture: { value: this.particleImg }
+        },
+        vertexShader: document.getElementById('vertexshader').textContent,
+        fragmentShader: document.getElementById('fragmentshader').textContent,
+        blending: THREE.AdditiveBlending,
+        depthTest: false,
+        transparent: true,
+    });
+
+    this.particles = new THREE.Points(geoParticles, material);
+    this.scene.add(this.particles);
+
+    this.geometryCopy = new THREE.BufferGeometry();
+    this.geometryCopy.copy(this.particles.geometry);
+}
+
+          visibleHeightAtZDepth ( depth, camera ) {
+      
+            const cameraOffset = camera.position.z;
+            if ( depth < cameraOffset ) depth -= cameraOffset;
+            else depth += cameraOffset;
+      
+            const vFOV = camera.fov * Math.PI / 180; 
+      
+            return 2 * Math.tan( vFOV / 2 ) * Math.abs( depth );
+          }
+      
+          visibleWidthAtZDepth( depth, camera ) {
+      
+            const height = this.visibleHeightAtZDepth( depth, camera );
+            return height * camera.aspect;
+      
+          }
+      
+          distance (x1, y1, x2, y2){
+             
+              return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
+          }
+      }
+      </script>
+
+      
+
+</body>
+</html>
